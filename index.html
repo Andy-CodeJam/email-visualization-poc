@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Email Extraction Proof of Concept</title>
+    <style>
+      /* Create a variable for the background color: */
+      :root {
+        --background-color: #f4f6fa;
+        --outline-background-color: #ffffff;
+        --outline-border-color: #e0e0e0;
+        --text-color: #1a1b1e;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        background: var(--background-color);
+        color: var(--text-color);
+      }
+      .container {
+        display: flex;
+        flex: 1 1 100%;
+        height: 100vh;
+      }
+      .outline {
+        width: 320px;
+        background: var(--outline-background-color);
+        border-right: 1px solid var(--outline-border-color);
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      .outline h2 {
+        font-size: 1.1em;
+        margin-top: 0;
+        letter-spacing: 1px;
+        color: var(--text-color);
+      }
+      .outline-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .outline-item {
+        padding: 8px 12px;
+        margin: 4px 0;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        border-left: 4px solid transparent;
+        font-size: 1em;
+        opacity: 0.95;
+      }
+      .outline-item[data-method='keyword'] {
+        border-left: 4px solid #ffd600;
+      }
+      .outline-item[data-method='llm'] {
+        border-left: 4px solid #81c784;
+      }
+      .outline-item.active,
+      .outline-item:hover {
+        background: #f1f8e9;
+        opacity: 1;
+      }
+      .email-viewer {
+        flex: 1 1 100%;
+        padding: 40px;
+        overflow-y: auto;
+        background: #f7f9fc;
+        min-width: 0;
+      }
+      .email-content {
+        background: #fff;
+        padding: 32px 28px;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px #dbe2ef60;
+        font-size: 1.05em;
+        line-height: 1.65;
+        white-space: pre-wrap;
+        word-break: break-word;
+        position: relative;
+      }
+      .extracted {
+        background: #fffde7;
+        border-radius: 3px;
+        padding: 1px 3px;
+        margin: 0 2px;
+        transition: background 0.2s, opacity 0.2s;
+        cursor: pointer;
+        opacity: 0.88;
+        border-bottom: 2px solid #ffd600;
+      }
+      .extracted[data-method='llm'] {
+        background: #d7e6d7;
+        border-bottom: 2px solid #388e3c;
+      }
+      .extracted.active[data-method='keyword'],
+      .extracted:hover[data-method='keyword'] {
+        background: #ffe082;
+        box-shadow: 0 0 0 2px #ffd60033;
+        opacity: 1;
+      }
+      .extracted.active[data-method='llm'],
+      .extracted:hover[data-method='llm'] {
+        background: #73d376;
+        box-shadow: 0 0 0 2px #81c78433;
+        opacity: 1;
+      }
+      .confidence {
+        font-size: 0.9em;
+        color: #888;
+        margin-left: 8px;
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="outline">
+        <h2>Extracted Elements</h2>
+        <ul class="outline-list" id="extracted-list"></ul>
+      </aside>
+      <main class="email-viewer">
+        <div class="email-content" id="email-content"></div>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
